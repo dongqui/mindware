@@ -12,6 +12,7 @@ class GetTodayTodos {
     if (todoList == null) {
       await repository.createTodayList();
       final newList = await repository.getTodayList();
+
       return newList!;
     }
 
