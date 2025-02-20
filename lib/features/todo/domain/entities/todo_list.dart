@@ -3,8 +3,8 @@ import 'todo_item.dart';
 class TodoList {
   final int id;
   final DateTime date;
-  final List<TodoItem> items;
-  
+  List<TodoItem> items;
+
   TodoList({
     required this.id,
     required this.date,
@@ -12,4 +12,4 @@ class TodoList {
   });
 
   bool get isCompleted => items.every((item) => item.isCompleted);
-} 
+}

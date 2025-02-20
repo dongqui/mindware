@@ -109,11 +109,11 @@ TodoModel _todoModelDeserialize(
 ) {
   final object = TodoModel(
     createdAt: reader.readDateTime(offsets[0]),
+    id: id,
     isCompleted: reader.readBoolOrNull(offsets[1]) ?? false,
     title: reader.readString(offsets[2]),
     todoListId: reader.readLong(offsets[3]),
   );
-  object.id = id;
   return object;
 }
 

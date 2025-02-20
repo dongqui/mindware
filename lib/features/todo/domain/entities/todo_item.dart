@@ -10,4 +10,13 @@ class TodoItem {
     this.isCompleted = false,
     required this.createdAt,
   });
+
+  TodoItem copyWith({bool? isCompleted, String? title, DateTime? createdAt}) {
+    return TodoItem(
+      id: id,
+      title: title ?? this.title,
+      isCompleted: isCompleted ?? this.isCompleted,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }

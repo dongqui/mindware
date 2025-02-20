@@ -10,7 +10,7 @@ class TodoListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -65,12 +65,11 @@ class TodoListPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final todo = provider.todos[index];
                         return TodoItemWidget(
+                          id: todo.id,
                           title: todo.title,
                           isCompleted: todo.isCompleted,
-                          onToggle: () => provider.toggleTodo(todo),
-                          onCounterTap: () {
-                            // TODO: Counter 화면으로 이동
-                          },
+                          onToggle: (isCompleted) => provider.updateTodo(
+                              todo.copyWith(isCompleted: isCompleted)),
                         );
                       },
                     );

@@ -34,9 +34,7 @@ class TodoProvider extends ChangeNotifier {
     try {
       _todoList = await _getTodayTodos();
       _error = null;
-      print('Loaded todos: ${_todoList?.items.length}'); // 디버깅용
     } catch (e) {
-      print('Error loading todos: $e'); // 디버깅용
       _error = e.toString();
     } finally {
       _isLoading = false;
@@ -44,22 +42,22 @@ class TodoProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> toggleTodo(TodoItem todo) async {
+  Future<void> updateTodo(TodoItem updatedTodo) async {
     if (_todoList == null) return;
 
-    final updatedTodo = TodoItem(
-      id: todo.id,
-      title: todo.title,
-      isCompleted: !todo.isCompleted,
-      createdAt: todo.createdAt,
-    );
-
     try {
-      await _updateTodo(updatedTodo);
-      await loadTodos(); // 목록 새로고침
-    } catch (e) {
-      _error = e.toString();
+      final updatedItems = _todoList!.items.map((item) {
+        return item.id == updatedTodo.id ? updatedTodo : item;
+      }).toList();
+
+      _todoList!.items = updatedItems;
+
       notifyListeners();
+
+      await _updateTodo(updatedTodo);
+    } catch (e) {
+      await loadTodos();
+      _error = e.toString();
     }
   }
 }

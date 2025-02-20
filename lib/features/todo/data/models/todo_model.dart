@@ -21,6 +21,7 @@ class TodoModel {
   final int todoListId;
 
   TodoModel({
+    this.id = Isar.autoIncrement,
     required this.title,
     this.isCompleted = false,
     required this.createdAt,
@@ -30,6 +31,7 @@ class TodoModel {
   // Entity -> Model
   factory TodoModel.fromEntity(TodoItem entity, int listId) {
     return TodoModel(
+      id: entity.id,
       title: entity.title,
       isCompleted: entity.isCompleted,
       createdAt: entity.createdAt,

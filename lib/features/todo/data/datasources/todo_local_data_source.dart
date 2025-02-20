@@ -27,20 +27,17 @@ class TodoLocalDataSourceImpl implements TodoLocalDataSource {
         .dateBetween(startOfDay, endOfDay)
         .findFirst();
 
-    if (todoList == null) {
-      return TodoListModel(date: today);
-    }
-
     return todoList;
   }
 
   @override
   Future<void> createTodayList() async {
-    final todoList = TodoListModel(date: DateTime.now());
-    
     await _isar.writeTxn(() async {
+      // 1. TodoList 생성 및 저장
+      final todoList = TodoListModel(date: DateTime.now());
       final listId = await _isar.todoListModels.put(todoList);
-      
+
+      // 2. Todo 아이템들 생성 및 저장
       final todos = [
         TodoModel(
           title: '이불 정리하기',
@@ -80,14 +77,19 @@ class TodoLocalDataSourceImpl implements TodoLocalDataSource {
       ];
 
       await _isar.todoModels.putAll(todos);
-      await todoList.items.load();
-      todoList.items.addAll(todos);
+
+      final savedTodos =
+          await _isar.todoModels.filter().todoListIdEqualTo(listId).findAll();
+
+      todoList.items.addAll(savedTodos);
+      await todoList.items.save();
     });
   }
 
   @override
   Future<void> updateTodoItem(TodoModel todo) async {
     await _isar.writeTxn(() async {
+      print('updateTodoItem@@: ${todo.id}');
       await _isar.todoModels.put(todo);
     });
   }
