@@ -39,7 +39,7 @@ class _CounterFragmentState extends State<CounterFragment> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "나는 30대에 100억대 부자가 된다.",
+                    "나는 매력 넘치고 자유로운 30대 100억 자산가다.",
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
