@@ -8,4 +8,5 @@ abstract class TodoRepository {
   Future<TodoList?> getTodayList();
   Future<void> createTodayList();
   Future<void> updateTodoItem(TodoItem item);
+  Future<List<TodoList>> getAllLists();
 }

@@ -9,6 +9,7 @@ abstract class TodoLocalDataSource {
   Future<TodoListModel?> getTodayList();
   Future<void> createTodayList();
   Future<void> updateTodoItem(TodoModel todo);
+  Future<List<TodoListModel>> getAllLists();
 }
 
 class TodoLocalDataSourceImpl implements TodoLocalDataSource {
@@ -89,8 +90,12 @@ class TodoLocalDataSourceImpl implements TodoLocalDataSource {
   @override
   Future<void> updateTodoItem(TodoModel todo) async {
     await _isar.writeTxn(() async {
-      print('updateTodoItem@@: ${todo.id}');
       await _isar.todoModels.put(todo);
     });
+  }
+
+  @override
+  Future<List<TodoListModel>> getAllLists() async {
+    return await _isar.todoListModels.where().sortByDate().findAll();
   }
 }

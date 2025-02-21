@@ -28,4 +28,10 @@ class TodoRepositoryImpl implements TodoRepository {
     final model = TodoModel.fromEntity(item, todoList.id);
     await localDataSource.updateTodoItem(model);
   }
+
+  @override
+  Future<List<TodoList>> getAllLists() async {
+    final models = await localDataSource.getAllLists();
+    return models.map((model) => model.toEntity()).toList();
+  }
 }
