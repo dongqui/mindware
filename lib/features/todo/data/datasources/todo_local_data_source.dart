@@ -75,6 +75,11 @@ class TodoLocalDataSourceImpl implements TodoLocalDataSource {
           createdAt: DateTime.now(),
           todoListId: listId,
         ),
+        TodoModel(
+          title: '자기 전에 감사하기',
+          createdAt: DateTime.now(),
+          todoListId: listId,
+        ),
       ];
 
       await _isar.todoModels.putAll(todos);
